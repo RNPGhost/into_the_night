@@ -27,8 +27,8 @@ public class TargetBasedMovementController : MonoBehaviour {
     // Check proximity to target to prevent 0 rounding errors
     float delta = 0.1f;
     if (Vector3.Distance(targetPosition, playerRigidbody.position) < delta) {
-      playerRigidbody.position = targetPosition;
       playerRigidbody.velocity = Vector3.zero;
+      playerRigidbody.position = targetPosition;
     } else {
       playerRigidbody.velocity = speed * (targetPosition - playerRigidbody.position).normalized;
     }
