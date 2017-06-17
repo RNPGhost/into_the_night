@@ -6,10 +6,26 @@ public class GameController : MonoBehaviour {
 
   [SerializeField]
   private ObstacleSpawner obstacleSpawner;
-  
-  public void LifeLost() {
+  [SerializeField]
+  private ScoreController scoreController;
+  [SerializeField]
+  private int startLives;
+
+  private int livesRemaining;
+
+  private void Start() {
+    livesRemaining = startLives;
+  }
+
+  public void PlayerDestroyed() {
     obstacleSpawner.ResetSpawning();
     ClearAllObstacles();
+
+    livesRemaining--;
+    if (livesRemaining == 0) {
+      // Game Over
+      scoreController.SaveScore();
+    }
   }
 
   private void ClearAllObstacles() {
