@@ -31,8 +31,7 @@ public class BoltFirer : MonoBehaviour {
 
   private void Update () {
     boltTimer -= Time.deltaTime;
-    Debug.Log(fire);
-    if (fire && (boltTimer < 0)) {
+    if (fire && (boltTimer <= 0)) {
       Instantiate(boltPrefab, boltSpawn.position, boltSpawn.rotation);
       boltTimer = boltCooldown;
     }
