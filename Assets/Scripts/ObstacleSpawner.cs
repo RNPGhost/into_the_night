@@ -11,36 +11,51 @@ public class ObstacleSpawner : MonoBehaviour {
   [SerializeField]
   private GameObject asteroid;
   [SerializeField]
-  private float spawnDelay;
+  private float delayBeforeAnySpawns;
+  [SerializeField]
+  private float initialDelayBetweenSpawns;
+  [SerializeField]
+  private float minSpawnDelay;
+  [SerializeField]
+  private float delayDecayRate;
   [SerializeField]
   private Transform target;
   [SerializeField]
-  private float obstacleSpeed;
+  private float initialObstacleSpeed;
+  [SerializeField]
+  private float obstacleSpeedIncreaseRate;
 
+  private float spawnDelay;
   private float spawnTimer;
+  private float obstacleSpeed;
   private bool allowSpawning;
 
   private void Start() {
     spawnTimer = 0;
-    SpawnWaves();
+    StartSpawning();
   }
 
   public void ResetSpawning() {
     StopSpawning();
-    SpawnWaves();
+    StartSpawning();
   }
 
   private void StopSpawning() {
     allowSpawning = false;
   }
 
-  private void SpawnWaves() {
+  private void StartSpawning() {
+    spawnDelay = initialDelayBetweenSpawns;
+    obstacleSpeed = initialObstacleSpeed;
+    spawnTimer = delayBeforeAnySpawns;
     allowSpawning = true;
   }
 
   private void Update() {
     spawnTimer -= Time.deltaTime;
     if (allowSpawning && (spawnTimer <= 0)) {
+      spawnDelay = Mathf.Max(minSpawnDelay, spawnDelay - delayDecayRate);
+      obstacleSpeed += obstacleSpeedIncreaseRate;
       spawnTimer = spawnDelay;
       SpawnObstacle(asteroid, obstacleSpeed);
     }
