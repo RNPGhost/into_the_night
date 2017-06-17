@@ -35,7 +35,7 @@ public class BoltFirer : MonoBehaviour {
     boltTimer -= Time.deltaTime;
     if (fire && (boltTimer <= 0)) {
       GameObject bolt = Instantiate(boltPrefab, boltSpawn.position, boltSpawn.rotation) as GameObject;
-      bolt.GetComponent<SingleDirectionMover>().SetVelocity(boltSpeed * Vector3.forward);
+      bolt.GetComponent<SingleDirectionMover>().SetVelocity(boltSpeed * (boltSpawn.rotation * Vector3.forward).normalized);
       boltTimer = boltCooldown;
     }
 	}
