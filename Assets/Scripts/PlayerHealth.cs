@@ -5,20 +5,24 @@ using UnityEngine;
 public class PlayerHealth : Health {
 
   [SerializeField]
+  private ScoreController scoreController;
+  [SerializeField]
   private int startLives;
 
   private int livesRemaining;
 
-  private void Start() {
+  override protected void Initialization() {
+    base.Initialization();
     livesRemaining = startLives;
   }
 
-  protected void DestroySelf() {
+  override protected void DestroySelf() {
     livesRemaining--;
     if (livesRemaining == 0) {
       scoreController.SaveScore();
+    } else {
+      // TODO: Go invisible temporarily
     }
     // TODO: Reset level
-    // TODO: Go invisible temporarily
   }
 }

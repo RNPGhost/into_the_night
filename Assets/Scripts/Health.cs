@@ -8,11 +8,7 @@ public class Health : MonoBehaviour {
   private float maxHealth;
   [SerializeField]
   private GameObject deathVFX;
-  [SerializeField]
-  protected ScoreController scoreController;
-  [SerializeField]
-  private float scoreValue;
-
+  
   private float health;
 
   public float CurrentHealth {
@@ -22,6 +18,10 @@ public class Health : MonoBehaviour {
   }
 
   private void Start() {
+    Initialization();
+  }
+
+  virtual protected void Initialization() {
     health = maxHealth;
   }
 
@@ -34,19 +34,14 @@ public class Health : MonoBehaviour {
 	
 	private void Die() {
     PlayDeathFX();
-    AddToScore();
-    DestorySelf();
+    DestroySelf();
 	}
 
   private void PlayDeathFX() {
     Instantiate(deathVFX, transform.position, transform.rotation);
   }
 
-  private void AddToScore() {
-    scoreController.AddToScore(scoreValue);
-  }
-
-  virtual protected void DestorySelf() {
+  virtual protected void DestroySelf() {
     Destroy(gameObject);
   }
 }
