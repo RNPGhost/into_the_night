@@ -4,17 +4,8 @@ using UnityEngine;
 
 public class SingleDirectionMover : MonoBehaviour {
 
-  [SerializeField]
-  private Vector3 defaultVelocity;
-
-  private Rigidbody objectRigidbody;
-
-  private void Start() {
-    objectRigidbody = GetComponent<Rigidbody>();
-    SetVelocity(defaultVelocity);
-  }
-
-  void SetVelocity (Vector3 velocity) {
+  public void SetVelocity (Vector3 velocity) {
+    Rigidbody objectRigidbody = GetComponent<Rigidbody>();
     objectRigidbody.velocity = velocity;
     objectRigidbody.rotation = Quaternion.LookRotation(velocity);
 	}
