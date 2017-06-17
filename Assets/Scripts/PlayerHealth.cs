@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerHealth : Health {
 
   [SerializeField]
+  private GameController gameController;
+  [SerializeField]
   private ScoreController scoreController;
   [SerializeField]
   private int startLives;
@@ -23,6 +25,6 @@ public class PlayerHealth : Health {
     } else {
       // TODO: Go invisible temporarily
     }
-    // TODO: Reset level
+    gameController.LifeLost();
   }
 }
