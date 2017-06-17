@@ -13,7 +13,7 @@ public class TargetBasedMovementController : MonoBehaviour {
   [SerializeField]
   private float tilt;
 
-  private Rigidbody playerRigidbody;
+  private Rigidbody objectRigidbody;
   private Vector3 targetPosition;
   
 
@@ -22,25 +22,25 @@ public class TargetBasedMovementController : MonoBehaviour {
   }
 
   private void Start() {
-    playerRigidbody = GetComponent<Rigidbody>();
-    targetPosition = playerRigidbody.position;
+    objectRigidbody = GetComponent<Rigidbody>();
+    targetPosition = objectRigidbody.position;
   }
 
-  private void FixedUpdate () {
+  private void FixedUpdate() {
     MoveTowardsTargetPosition();
 	}
 
   private void MoveTowardsTargetPosition() {
     // Check proximity to target to prevent 0 rounding errors
-    if (Vector3.Distance(targetPosition, playerRigidbody.position) < smallDistance) {
-      playerRigidbody.velocity = Vector3.zero;
-      playerRigidbody.position = targetPosition;
+    if (Vector3.Distance(targetPosition, objectRigidbody.position) < smallDistance) {
+      objectRigidbody.velocity = Vector3.zero;
+      objectRigidbody.position = targetPosition;
     } else {
-      playerRigidbody.velocity = speed * (targetPosition - playerRigidbody.position).normalized;
+      objectRigidbody.velocity = speed * (targetPosition - objectRigidbody.position).normalized;
     }
 
     if (tiltSideways) {
-      playerRigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, -tilt * playerRigidbody.velocity.x);
+      objectRigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, -tilt * objectRigidbody.velocity.x);
     }
   }
 }
