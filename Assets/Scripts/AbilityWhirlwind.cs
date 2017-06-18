@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,11 +10,17 @@ public class AbilityWhirlwind : Ability {
   [SerializeField]
   private float abilityDuration;
 
+  private const string ABILITY_NAME = "Whirlwind";
+
   private bool activated;
   private float cooldownTimer;
 
   private void Start() {
     activated = false;
+  }
+
+  public override string GetName() {
+    return ABILITY_NAME;
   }
 
   override public void Activate() {
@@ -36,6 +43,5 @@ public class AbilityWhirlwind : Ability {
     if (activated & (cooldownTimer < 0)) {
       activated = false;
     }
-
   }
 }

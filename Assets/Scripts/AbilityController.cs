@@ -7,7 +7,13 @@ public class AbilityController : MonoBehaviour {
   [SerializeField]
   private Ability currentAbility;
 
-	public void ActivateAbility() {
-    currentAbility.Activate();
+  public Ability CurrentAbility {
+    get {
+      return currentAbility;
+    }
+  }
+
+  public void ActivateAbility() {
+    CurrentAbility.Activate();
   }
 }
