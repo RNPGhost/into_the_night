@@ -10,27 +10,45 @@ public class GameController : MonoBehaviour {
   private ScoreController scoreController;
   [SerializeField]
   private int startLives;
+  [SerializeField]
+  private float playerSpawnDelay;
+  [SerializeField]
+  private GameObject player;
 
   private int livesRemaining;
+  private bool respawnPlayer;
+  private float playerSpawnTimer;
 
   private void Start() {
     livesRemaining = startLives;
+    respawnPlayer = true;
+    playerSpawnTimer = 0;
   }
 
   public void PlayerDestroyed() {
-    obstacleSpawner.ResetSpawning();
     ClearAllObstacles();
 
     livesRemaining--;
     if (livesRemaining == 0) {
-      // Game Over
+      respawnPlayer = false;
       scoreController.SaveScore();
+      obstacleSpawner.StopSpawning();
+    } else {
+      obstacleSpawner.ResetSpawning();
+      playerSpawnTimer = playerSpawnDelay;
     }
   }
 
   private void ClearAllObstacles() {
     foreach (GameObject obstacle in GameObject.FindGameObjectsWithTag("Obstacle")) {
       Destroy(obstacle);
+    }
+  }
+
+  private void Update() {
+    playerSpawnTimer -= Time.deltaTime;
+    if (respawnPlayer && (playerSpawnTimer <= 0)) {
+      player.SetActive(true);
     }
   }
 }

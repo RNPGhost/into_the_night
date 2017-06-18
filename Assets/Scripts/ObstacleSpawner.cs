@@ -40,7 +40,7 @@ public class ObstacleSpawner : MonoBehaviour {
     StartSpawning();
   }
 
-  private void StopSpawning() {
+  public void StopSpawning() {
     allowSpawning = false;
   }
 

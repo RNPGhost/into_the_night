@@ -8,7 +8,7 @@ public class PlayerHealth : Health {
   private GameController gameController;
 
   override protected void DestroySelf() {
-    // TODO: Go invisible temporarily
+    gameObject.SetActive(false);
     gameController.PlayerDestroyed();
   }
 }
