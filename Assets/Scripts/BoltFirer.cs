@@ -14,6 +14,8 @@ public class BoltFirer : MonoBehaviour {
   private float boltCooldown;
   [SerializeField]
   private float boltSpeed;
+  [SerializeField]
+  private AudioSource boltSFX;
 
   private float boltTimer;
   private bool fire;
@@ -36,6 +38,7 @@ public class BoltFirer : MonoBehaviour {
     if (fire && (boltTimer <= 0)) {
       GameObject bolt = Instantiate(boltPrefab, boltSpawn.position, boltSpawn.rotation) as GameObject;
       bolt.GetComponent<SingleDirectionMover>().SetVelocity(boltSpeed * (boltSpawn.rotation * Vector3.forward).normalized);
+      boltSFX.Play();
       boltTimer = boltCooldown;
     }
 	}

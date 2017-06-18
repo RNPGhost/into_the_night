@@ -38,9 +38,7 @@ public class Health : MonoBehaviour {
 	}
 
   private void PlayDeathFX() {
-    if (deathVFX != null) {
-      Instantiate(deathVFX, transform.position, transform.rotation);
-    }
+    Instantiate(deathVFX, transform.position, transform.rotation);
   }
 
   virtual protected void DestroySelf() {
