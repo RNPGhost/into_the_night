@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ScoreController : MonoBehaviour {
 
+  [SerializeField]
+  private NumericalValueUIController scoreUIController;
+  [SerializeField]
+  private NumericalValueUIController highScoreUIController;
+
   private const string HIGH_SCORE_VARIABLE_NAME = "High Score";
 
   private float score;
@@ -23,17 +28,16 @@ public class ScoreController : MonoBehaviour {
   }
 
   private void Start() {
-    score = 0;
-    highScore = GetHighScore();
+    ResetScore();
+    UpdateHighScore();
   }
   
   public void AddToScore(float scoreIncrease) {
-    score += scoreIncrease;
-    Debug.Log("Current score is " + score);
+    SetScore(score + scoreIncrease);
   }
 
   public void ResetScore() {
-    score = 0;
+    SetScore(0);
   }
 
   public void SaveScore() {
@@ -46,6 +50,12 @@ public class ScoreController : MonoBehaviour {
       SetHighScore(score);
       highScore = score;
     }
+    highScoreUIController.UpdateValueText(highScore);
+  }
+
+  private void SetScore(float newScore) {
+    score = newScore;
+    scoreUIController.UpdateValueText(score);
   }
 
   private float GetHighScore() {
