@@ -31,9 +31,8 @@ public class AbilityWhirlwind : Ability {
     if (CanActivate()) {
       cooldownTimer = abilityCooldown;
       activated = true;
+      boltFirer.TemporarilyChangeBoltCooldown(newBoltCooldown, abilityDuration);
     }
-
-    boltFirer.TemporarilyChangeBoltCooldown(newBoltCooldown, abilityDuration);
   }
 
   override public float GetCooldown() {
@@ -42,6 +41,11 @@ public class AbilityWhirlwind : Ability {
 
   override public bool CanActivate() {
     return !activated;
+  }
+
+  public override void ResetCooldown() {
+    cooldownTimer = 0;
+    activated = false;
   }
 
   private void Update() {

@@ -7,4 +7,5 @@ public abstract class Ability : MonoBehaviour {
   public abstract void Activate();
   public abstract float GetCooldown();
   public abstract bool CanActivate();
+  public abstract void ResetCooldown();
 }

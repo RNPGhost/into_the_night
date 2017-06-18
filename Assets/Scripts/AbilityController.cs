@@ -16,4 +16,8 @@ public class AbilityController : MonoBehaviour {
   public void ActivateAbility() {
     CurrentAbility.Activate();
   }
+
+  public void ResetCooldown() {
+    CurrentAbility.ResetCooldown();
+  }
 }

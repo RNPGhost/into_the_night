@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour {
   private float playerSpawnDelay;
   [SerializeField]
   private GameObject player;
+  [SerializeField]
+  private AbilityController abilityController;
 
   private int livesRemaining;
   private bool respawnPlayer;
@@ -38,6 +40,7 @@ public class GameController : MonoBehaviour {
     SetLevelUI();
     scoreController.ResetScore();
     obstacleSpawner.ResetSpawning();
+    abilityController.ResetCooldown();
   }
 
   public void PlayerDestroyed() {
