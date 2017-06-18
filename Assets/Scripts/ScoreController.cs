@@ -32,16 +32,20 @@ public class ScoreController : MonoBehaviour {
     Debug.Log("Current score is " + score);
   }
 
+  public void ResetScore() {
+    score = 0;
+  }
+
   public void SaveScore() {
-    float highScore = GetHighScore();
-    if (score > highScore) {
-      UpdateHighScore();
-    }
+    UpdateHighScore();
   }
 
   private void UpdateHighScore() {
-    SetHighScore(score);
-    highScore = score;
+    float highScore = GetHighScore();
+    if (score > highScore) {
+      SetHighScore(score);
+      highScore = score;
+    }
   }
 
   private float GetHighScore() {
