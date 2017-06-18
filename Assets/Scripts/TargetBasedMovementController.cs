@@ -41,7 +41,7 @@ public class TargetBasedMovementController : MonoBehaviour {
     }
 
     if (tiltSideways) {
-      objectRigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, -tilt * objectRigidbody.velocity.x);
+      objectRigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, -tilt * objectRigidbody.velocity.normalized.x );
     }
   }
 }
