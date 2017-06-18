@@ -68,9 +68,16 @@ public class ObstacleSpawner : MonoBehaviour {
     GameObject spawnedObstacle = Instantiate(obstacle, spawnPosition, gameObject.transform.rotation) as GameObject;
 
     spawnedObstacle.GetComponent<ObstacleHealth>().SetScoreController(scoreController);
+    
+    SetObstacleTarget(spawnedObstacle, speed);
+  }
 
+  private void SetObstacleTarget(GameObject spawnedObstacle, float speed) {
     float targetOffset = maxOffset * Random.Range(-1.0f, 1.0f);
     Vector3 targetPosition = new Vector3(target.position.x + targetOffset, target.position.y, target.position.z);
-    spawnedObstacle.GetComponent<SingleDirectionMover>().SetVelocity(speed * (targetPosition - spawnPosition).normalized);
+    SingleDirectionMover singleDirectionMover = spawnedObstacle.GetComponent<SingleDirectionMover>();
+    if (singleDirectionMover != null) {
+      singleDirectionMover.SetVelocity(speed * (targetPosition - spawnedObstacle.transform.position).normalized);
+    }
   }
 }
