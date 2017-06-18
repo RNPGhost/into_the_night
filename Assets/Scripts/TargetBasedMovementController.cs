@@ -31,7 +31,8 @@ public class TargetBasedMovementController : MonoBehaviour {
   }
 
   private void MoveTowardsTargetPosition() {
-    // Check proximity to target to prevent 0 rounding errors
+    // Check proximity to target to prevent erratic movement near target
+    objectRigidbody = GetComponent<Rigidbody>();
     if (Vector3.Distance(targetPosition, objectRigidbody.position) < smallDistance) {
       objectRigidbody.velocity = Vector3.zero;
       objectRigidbody.position = targetPosition;

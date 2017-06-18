@@ -20,14 +20,6 @@ public class ScoreController : MonoBehaviour {
       return score;
     }
   }
-
-  private float highScore;
-
-  public float HighScore {
-    get {
-      return highScore;
-    }
-  }
   
   public void AddToScore(float scoreIncrease) {
     SetScore(score + scoreIncrease);

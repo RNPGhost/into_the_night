@@ -11,6 +11,10 @@ public class ObstacleSpawner : MonoBehaviour {
   [SerializeField]
   private GameObject asteroid;
   [SerializeField]
+  private GameObject enemyFighter;
+  [SerializeField]
+  private float spawnFighterProbability;
+  [SerializeField]
   private float delayBeforeAnySpawns;
   [SerializeField]
   private float initialDelayBetweenSpawns;
@@ -24,6 +28,12 @@ public class ObstacleSpawner : MonoBehaviour {
   private float initialObstacleSpeed;
   [SerializeField]
   private float obstacleSpeedIncreaseRate;
+  [SerializeField]
+  private float maxObstacleSpeed;
+  [SerializeField]
+  private float enemyFighterSpeed;
+  [SerializeField]
+  private GameObject player;
 
   private float spawnDelay;
   private float spawnTimer;
@@ -49,34 +59,61 @@ public class ObstacleSpawner : MonoBehaviour {
     spawnTimer = delayBeforeAnySpawns;
     allowSpawning = true;
   }
+  
 
   private void Update() {
     spawnTimer -= Time.deltaTime;
     if (allowSpawning && (spawnTimer <= 0)) {
       spawnDelay = Mathf.Max(minSpawnDelay, spawnDelay - delayDecayRate);
-      obstacleSpeed += obstacleSpeedIncreaseRate;
       spawnTimer = spawnDelay;
-      SpawnObstacle(asteroid, obstacleSpeed);
+
+      ChooseObstacleToSpawn();
     }
   }
 
-  private void SpawnObstacle(GameObject obstacle, float speed) {
+  private void ChooseObstacleToSpawn() {
+    if (Random.Range(0.0f, 1.0f) <= spawnFighterProbability) {
+      SpawnFighter();
+    } else {
+      SpawnAsteroid();
+    }
+
+  }
+
+  private void SpawnFighter() {
+    SetFighterTarget(SpawnObstacle(enemyFighter));
+  }
+
+  private void SetFighterTarget(GameObject fighter) {
+    AutoTargetMovementController autoTargetMovementController = fighter.GetComponent<AutoTargetMovementController>();
+    if (autoTargetMovementController != null) {
+      autoTargetMovementController.SetSpeed(enemyFighterSpeed);
+      autoTargetMovementController.SetTarget(player);
+    }
+  }
+
+  private void SpawnAsteroid() {
+    SetAsteroidTarget(SpawnObstacle(asteroid));
+  }
+
+  private void SetAsteroidTarget(GameObject spawnedObstacle) {
+    SingleDirectionMover singleDirectionMover = spawnedObstacle.GetComponent<SingleDirectionMover>();
+    if (singleDirectionMover != null) {
+      obstacleSpeed = Mathf.Min(maxObstacleSpeed, obstacleSpeed + obstacleSpeedIncreaseRate);
+      float targetOffset = maxOffset * Random.Range(-1.0f, 1.0f);
+      Vector3 targetPosition = new Vector3(target.position.x + targetOffset, target.position.y, target.position.z);
+      singleDirectionMover.SetVelocity(obstacleSpeed * (targetPosition - spawnedObstacle.transform.position).normalized);
+    }
+  }
+
+  private GameObject SpawnObstacle(GameObject obstacle) {
     Vector3 objectPosition = gameObject.transform.position;
     float offset = maxOffset * Random.Range(-1.0f, 1.0f);
     Vector3 spawnPosition = new Vector3(objectPosition.x + offset, objectPosition.y, objectPosition.z);
     GameObject spawnedObstacle = Instantiate(obstacle, spawnPosition, gameObject.transform.rotation) as GameObject;
 
     spawnedObstacle.GetComponent<ObstacleHealth>().SetScoreController(scoreController);
-    
-    SetObstacleTarget(spawnedObstacle, speed);
-  }
 
-  private void SetObstacleTarget(GameObject spawnedObstacle, float speed) {
-    float targetOffset = maxOffset * Random.Range(-1.0f, 1.0f);
-    Vector3 targetPosition = new Vector3(target.position.x + targetOffset, target.position.y, target.position.z);
-    SingleDirectionMover singleDirectionMover = spawnedObstacle.GetComponent<SingleDirectionMover>();
-    if (singleDirectionMover != null) {
-      singleDirectionMover.SetVelocity(speed * (targetPosition - spawnedObstacle.transform.position).normalized);
-    }
+    return spawnedObstacle;
   }
 }
