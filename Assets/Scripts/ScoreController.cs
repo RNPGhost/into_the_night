@@ -7,6 +7,8 @@ public class ScoreController : MonoBehaviour {
   [SerializeField]
   private NumericalValueUIController scoreUIController;
   [SerializeField]
+  private NumericalValueUIController endScoreUIController;
+  [SerializeField]
   private NumericalValueUIController highScoreUIController;
 
   private const string HIGH_SCORE_VARIABLE_NAME = "High Score";
@@ -26,11 +28,6 @@ public class ScoreController : MonoBehaviour {
       return highScore;
     }
   }
-
-  private void Start() {
-    ResetScore();
-    UpdateHighScore();
-  }
   
   public void AddToScore(float scoreIncrease) {
     SetScore(score + scoreIncrease);
@@ -38,6 +35,7 @@ public class ScoreController : MonoBehaviour {
 
   public void ResetScore() {
     SetScore(0);
+    UpdateHighScore();
   }
 
   public void SaveScore() {
@@ -56,6 +54,7 @@ public class ScoreController : MonoBehaviour {
   private void SetScore(float newScore) {
     score = newScore;
     scoreUIController.UpdateValueText(score);
+    endScoreUIController.UpdateValueText(score);
   }
 
   private float GetHighScore() {

@@ -32,7 +32,6 @@ public class ObstacleSpawner : MonoBehaviour {
 
   private void Start() {
     spawnTimer = 0;
-    StartSpawning();
   }
 
   public void ResetSpawning() {

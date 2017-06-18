@@ -5,6 +5,10 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
   [SerializeField]
+  private GameObject levelUI;
+  [SerializeField]
+  private GameObject endScreenUI;
+  [SerializeField]
   private NumericalValueUIController livesUIController;
   [SerializeField]
   private ObstacleSpawner obstacleSpawner;
@@ -22,10 +26,18 @@ public class GameController : MonoBehaviour {
   private float playerSpawnTimer;
 
   private void Start() {
+    respawnPlayer = false;
+    playerSpawnTimer = 0;
+  }
+
+  public void StartLevel() {
     livesRemaining = startLives;
     livesUIController.UpdateValueText(livesRemaining);
     respawnPlayer = true;
     playerSpawnTimer = 0;
+    SetLevelUI();
+    scoreController.ResetScore();
+    obstacleSpawner.ResetSpawning();
   }
 
   public void PlayerDestroyed() {
@@ -36,6 +48,7 @@ public class GameController : MonoBehaviour {
       respawnPlayer = false;
       scoreController.SaveScore();
       obstacleSpawner.StopSpawning();
+      SetEndScreenUI();
     } else {
       obstacleSpawner.ResetSpawning();
       playerSpawnTimer = playerSpawnDelay;
@@ -54,5 +67,15 @@ public class GameController : MonoBehaviour {
     if (respawnPlayer && (playerSpawnTimer <= 0)) {
       player.SetActive(true);
     }
+  }
+
+  private void SetLevelUI() {
+    levelUI.SetActive(true);
+    endScreenUI.SetActive(false);
+  }
+
+  private void SetEndScreenUI() {
+    levelUI.SetActive(false);
+    endScreenUI.SetActive(true);
   }
 }
