@@ -41,5 +41,5 @@ public class BoltFirer : MonoBehaviour {
       boltSFX.Play();
       boltTimer = boltCooldown;
     }
-	}
+  }
 }

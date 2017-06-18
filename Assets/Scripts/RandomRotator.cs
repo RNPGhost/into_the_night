@@ -7,7 +7,7 @@ public class RandomRotator : MonoBehaviour {
   [SerializeField]
   private float rotationSpeed;
 
-	void Start () {
+  void Start () {
     GetComponent<Rigidbody>().angularVelocity = rotationSpeed * Random.insideUnitSphere;
-	}
+  }
 }

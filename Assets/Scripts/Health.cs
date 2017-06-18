@@ -31,11 +31,11 @@ public class Health : MonoBehaviour {
       Die();
     }
   }
-	
-	private void Die() {
+
+  private void Die() {
     PlayDeathFX();
     DestroySelf();
-	}
+  }
 
   private void PlayDeathFX() {
     Instantiate(deathVFX, transform.position, transform.rotation);

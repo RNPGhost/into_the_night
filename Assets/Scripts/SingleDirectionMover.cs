@@ -8,5 +8,5 @@ public class SingleDirectionMover : MonoBehaviour {
     Rigidbody objectRigidbody = GetComponent<Rigidbody>();
     objectRigidbody.velocity = velocity;
     objectRigidbody.rotation = Quaternion.LookRotation(velocity);
-	}
+  }
 }

@@ -28,7 +28,7 @@ public class TargetBasedMovementController : MonoBehaviour {
 
   private void FixedUpdate() {
     MoveTowardsTargetPosition();
-	}
+  }
 
   private void MoveTowardsTargetPosition() {
     // Check proximity to target to prevent 0 rounding errors

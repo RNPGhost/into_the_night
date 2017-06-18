@@ -9,7 +9,7 @@ public class NumericalValueUIController : MonoBehaviour {
   [SerializeField]
   private string prefixText;
 
-	public void UpdateValueText(float value) {
+  public void UpdateValueText(float value) {
     textUI.text = prefixText + value;
   }
 }
