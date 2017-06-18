@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NumericalValueUIController : MonoBehaviour {
 
   [SerializeField]
-  private GUIText textUI;
+  private Text textUI;
   [SerializeField]
   private string prefixText;
 
