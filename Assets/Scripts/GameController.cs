@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
   [SerializeField]
+  private NumericalValueUIController livesUIController;
+  [SerializeField]
   private ObstacleSpawner obstacleSpawner;
   [SerializeField]
   private ScoreController scoreController;
@@ -21,6 +23,7 @@ public class GameController : MonoBehaviour {
 
   private void Start() {
     livesRemaining = startLives;
+    livesUIController.UpdateValueText(livesRemaining);
     respawnPlayer = true;
     playerSpawnTimer = 0;
   }
@@ -37,6 +40,7 @@ public class GameController : MonoBehaviour {
       obstacleSpawner.ResetSpawning();
       playerSpawnTimer = playerSpawnDelay;
     }
+    livesUIController.UpdateValueText(livesRemaining);
   }
 
   private void ClearAllObstacles() {
