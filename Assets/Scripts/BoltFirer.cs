@@ -17,7 +17,10 @@ public class BoltFirer : MonoBehaviour {
   [SerializeField]
   private AudioSource boltSFX;
 
+  private float defaultBoltCooldown;
   private float boltTimer;
+  private bool boltCooldownChanged;
+  private float changedBoltCooldownTimer;
   private bool fire;
 
   public void StartFiring() {
@@ -28,12 +31,28 @@ public class BoltFirer : MonoBehaviour {
     fire = false;
   }
 
+  public void TemporarilyChangeBoltCooldown(float newBoltCooldown, float changeDuration) {
+    changedBoltCooldownTimer = changeDuration;
+    boltCooldown = newBoltCooldown;
+    boltCooldownChanged = true;
+  }
+
   private void Start() {
     boltTimer = 0;
+    defaultBoltCooldown = boltCooldown;
+    boltCooldownChanged = false;
     fire = fireOnStart;
   }
 
   private void Update () {
+    if (boltCooldownChanged) {
+      changedBoltCooldownTimer -= Time.deltaTime;
+      if (changedBoltCooldownTimer <= 0) {
+        boltCooldown = defaultBoltCooldown;
+        boltCooldownChanged = false;
+      }
+    }
+
     boltTimer -= Time.deltaTime;
     if (fire && (boltTimer <= 0)) {
       GameObject bolt = Instantiate(boltPrefab, boltSpawn.position, boltSpawn.rotation) as GameObject;

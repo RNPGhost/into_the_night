@@ -9,6 +9,10 @@ public class AbilityWhirlwind : Ability {
   private float abilityCooldown;
   [SerializeField]
   private float abilityDuration;
+  [SerializeField]
+  private BoltFirer boltFirer;
+  [SerializeField]
+  private float newBoltCooldown;
 
   private const string ABILITY_NAME = "Whirlwind";
 
@@ -28,6 +32,8 @@ public class AbilityWhirlwind : Ability {
       cooldownTimer = abilityCooldown;
       activated = true;
     }
+
+    boltFirer.TemporarilyChangeBoltCooldown(newBoltCooldown, abilityDuration);
   }
 
   override public float GetCooldown() {
