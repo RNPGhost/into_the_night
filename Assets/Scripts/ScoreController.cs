@@ -29,7 +29,6 @@ public class ScoreController : MonoBehaviour {
 
   public void ResetScore() {
     SetScore(0);
-    SetHighScore(0);
     UpdateHighScore();
     newHighscoreUIController.ResetText();
   }
